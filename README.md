@@ -63,7 +63,9 @@ No special syntax. No forms. Just talk — Ideate handles the structure.
 
 ## How Context Works
 
-When you branch, the main thread pauses. Your exploration is scoped — you can go deep without polluting the conversation you'll come back to. When you merge, only the conclusion carries forward. The noise stays behind.
+Ideation eats context. You explore a pricing tangent for 20 messages, then switch to auth — and now your conversation is buried under details that don't matter anymore. The deeper you go, the less room you have to think.
+
+Ideate solves this with branching. When you branch, the exploration happens in its own scoped context. The main thread stays exactly where you left it — clean, uncluttered. When you merge, only the conclusion carries back. The 20 messages of back-and-forth that got you there stay behind. You return to a fresh context with just the decision, ready to move on.
 
 <p align="center">
   <img src="assets/context-isolation.svg" alt="Context isolation — exploration stays on the branch, only the conclusion merges back" width="800">
