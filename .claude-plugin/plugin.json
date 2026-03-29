@@ -1,0 +1,16 @@
+{
+  "name": "ideate",
+  "description": "Turn conversations into structured project briefs using git-like branching, artifact extraction, and document generation.",
+  "version": "0.1.0",
+  "author": {
+    "name": "piedynamics"
+  },
+  "license": "MIT",
+  "keywords": [
+    "ideation",
+    "brainstorming",
+    "product-design",
+    "document-generation",
+    "branching"
+  ]
+}
