@@ -3,6 +3,10 @@
 </p>
 
 <p align="center">
+  <strong>Branch your thinking. Merge what matters.</strong>
+</p>
+
+<p align="center">
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="MIT License"></a>
   <img src="https://img.shields.io/badge/version-0.1.0-green.svg" alt="Version 0.1.0">
   <img src="https://img.shields.io/badge/Claude_Code-plugin-8A2BE2.svg" alt="Claude Code Plugin">
@@ -10,45 +14,11 @@
 
 ---
 
-<table>
-<tr>
-<th width="50%">What's in your head</th>
-<th width="50%">What Ideate produces</th>
-</tr>
-<tr>
-<td>
+Ideate is a [Claude Code](https://claude.ai/code) plugin for the messy, early phase of software projects. Describe your idea conversationally — ramble, pivot, contradict yourself — while Ideate tracks your thinking with git-like branching, extracts structured artifacts, and produces a document you can actually hand off.
 
-*"So it's like a payments thing... maybe freemium? Or flat rate. Actually we need OAuth first. Wait, who's even using this — developers? Small businesses? Both? And there's a compliance thing someone mentioned..."*
-
-</td>
-<td>
-
-```markdown
-# Payments Platform — Project Brief
-
-## Goals
-- Launch MVP in Q3 targeting SMB merchants
-
-## Personas
-- Small business owner (non-technical)
-- Developer integrating via API
-
-## Features
-- Freemium tier with usage-based pricing
-- OAuth2 via Google/GitHub
-- Merchant dashboard with real-time analytics
-
-## Decisions
-- Freemium over flat-rate (validated via branch)
-- OAuth-only, no email/password (security)
-
-## Constraints
-- PCI DSS compliance required at launch
-```
-
-</td>
-</tr>
-</table>
+<p align="center">
+  <img src="assets/hero-branch-flow.svg" alt="Branch and merge flow — ideas fork into branches, conclusions merge back to main" width="800">
+</p>
 
 ## Install
 
@@ -89,54 +59,28 @@ You:  Yeah, merge it.
   Back on main. What about authentication?
 ```
 
-No special syntax. No forms. Just talk through your idea — Ideate handles the structure.
+No special syntax. No forms. Just talk — Ideate handles the structure.
 
-## How It Works
+## How Context Works
 
-<table>
-<tr>
-<td width="33%" align="center">
-<h3>Branch</h3>
-<p>Explore tangents in isolation. Like git branches for your thinking — merge the conclusions, abandon the dead ends.</p>
-</td>
-<td width="33%" align="center">
-<h3>Extract</h3>
-<p>As ideas solidify, Ideate pulls out typed artifacts: features, decisions, constraints, personas, goals, and modules.</p>
-</td>
-<td width="33%" align="center">
-<h3>Document</h3>
-<p>Run <code>/ideate.doc</code> to assemble everything into a structured brief you can hand off, share, or build from.</p>
-</td>
-</tr>
-</table>
+When you branch, the main thread pauses. Your exploration is scoped — you can go deep without polluting the conversation you'll come back to. When you merge, only the conclusion carries forward. The noise stays behind.
 
-### Branching model
+<p align="center">
+  <img src="assets/context-isolation.svg" alt="Context isolation — exploration stays on the branch, only the conclusion merges back" width="800">
+</p>
 
-When your thinking diverges, Ideate creates a branch — an isolated thread where you can explore without polluting the main conversation.
+## Artifact Extraction
 
-```
-Main thread: "Building a payments platform..."
-  └── pricing-model
-  │   ├── Exploring freemium vs flat-rate
-  │   ├── Landed on freemium with usage tiers
-  │   └── ✓ Merged → Decision + Feature extracted
-  └── auth-approach
-      ├── OAuth vs email/password
-      └── ✓ Merged → "OAuth2 via Google/GitHub only"
-```
+As ideas solidify, Ideate pulls them into typed artifacts:
 
-### Artifact types
+- **Feature** — what the product does
+- **Decision** — what was decided and why
+- **Constraint** — technical or business limits
+- **Persona** — who uses this
+- **Goal** — what success looks like
+- **Module** — functional subsystems
 
-| Type | What it captures |
-|---|---|
-| **Feature** | What the product does |
-| **Decision** | What was decided and why |
-| **Constraint** | Technical or business limits |
-| **Persona** | Who uses this |
-| **Goal** | What success looks like |
-| **Module** | Functional subsystems |
-
-Artifacts are stored as individual markdown files in `.ideate/artifacts/` — human-readable, diffable, always current.
+Artifacts live as individual markdown files in `.ideate/artifacts/` — human-readable, diffable, always reflecting the latest state.
 
 ## Commands
 
@@ -148,11 +92,11 @@ Artifacts are stored as individual markdown files in `.ideate/artifacts/` — hu
 | `/ideate.doc` | Generate the session document |
 | `/ideate.research <topic>` | Research similar products and prior art |
 
-Most of the time you won't need these — Ideate detects your intent conversationally.
+Most of the time you won't need these — Ideate detects intent conversationally.
 
 ## Session Data
 
-All state lives in `.ideate/` as plain markdown. Browse it, edit it, or delete it with any text editor.
+All state lives in `.ideate/` as plain markdown.
 
 ```
 .ideate/
@@ -165,9 +109,9 @@ All state lives in `.ideate/` as plain markdown. Browse it, edit it, or delete i
 
 ## Why This Exists
 
-The gap between "I have an idea" and "here's a document someone else can act on" is where most projects lose momentum. You either skip straight to building (and discover missing requirements later) or spend days writing specs that nobody reads.
+The gap between "I have an idea" and "here's a document someone else can act on" is where most projects lose momentum. You either skip straight to building and discover missing requirements later, or spend days writing specs nobody reads.
 
-Ideate fills that gap. Talk through your idea like you would with a coworker. Walk away with a structured brief.
+Ideate fills that gap. Think out loud. Walk away with a structured brief.
 
 ## Documentation
 
