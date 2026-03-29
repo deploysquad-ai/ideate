@@ -1,11 +1,11 @@
 <p align="center">
-  <h1 align="center">Ideate</h1>
-  <p align="center"><strong>Ramble freely. Ship a structured brief.</strong></p>
-  <p align="center">
-    <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="MIT License"></a>
-    <img src="https://img.shields.io/badge/version-0.1.0-green.svg" alt="Version 0.1.0">
-    <img src="https://img.shields.io/badge/Claude_Code-plugin-8A2BE2.svg" alt="Claude Code Plugin">
-  </p>
+  <img src="assets/brand/logo-mark.svg" alt="ideate" width="480">
+</p>
+
+<p align="center">
+  <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="MIT License"></a>
+  <img src="https://img.shields.io/badge/version-0.1.0-green.svg" alt="Version 0.1.0">
+  <img src="https://img.shields.io/badge/Claude_Code-plugin-8A2BE2.svg" alt="Claude Code Plugin">
 </p>
 
 ---
