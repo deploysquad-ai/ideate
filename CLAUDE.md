@@ -7,17 +7,18 @@ Ideate is a Claude Code plugin for structured ideation. It's a set of markdown s
 ## Project Structure
 
 ```
-.claude-plugin/plugin.json    — plugin manifest
-skills/ideate/ideate.md       — main skill: session orchestration, intent detection, artifact extraction
-skills/branch/branch.md       — branch creation and switching
-skills/merge/merge.md         — squash-merge and abandon
-skills/doc/doc.md             — document generation from artifacts
-skills/research/research.md   — web research scoped to current thread
+.claude-plugin/plugin.json         — plugin manifest
+.claude-plugin/marketplace.json    — marketplace distribution metadata
+skills/ideate/SKILL.md             — main skill: session orchestration, intent detection, artifact extraction
+skills/branch/SKILL.md             — branch creation and switching
+skills/merge/SKILL.md              — squash-merge and abandon
+skills/doc/SKILL.md                — document generation from artifacts
+skills/research/SKILL.md           — web research scoped to current thread
 ```
 
 ## How Skills Work
 
-Each skill is a markdown file with YAML frontmatter. Claude Code auto-discovers skills from the `skills/` directory. The frontmatter defines the skill name (which becomes the slash command) and description (which tells Claude when to invoke it).
+Each skill lives in `skills/<skill-name>/SKILL.md` with YAML frontmatter. Claude Code auto-discovers `SKILL.md` files from subdirectories of `skills/`. The frontmatter defines the skill name (which becomes the slash command) and description (which tells Claude when to invoke it).
 
 ## Session Data Contract
 
@@ -50,6 +51,6 @@ Six types: `feature`, `decision`, `constraint`, `persona`, `goal`, `module`. Eac
 
 When editing skill files:
 - Keep the prompt focused and specific. Don't add generic LLM instructions.
-- Intent detection patterns in `ideate.md` should be concrete examples, not vague descriptions.
-- Artifact schemas must stay in sync across `ideate.md` (extraction) and `doc.md` (assembly).
+- Intent detection patterns in `skills/ideate/SKILL.md` should be concrete examples, not vague descriptions.
+- Artifact schemas must stay in sync across `skills/ideate/SKILL.md` (extraction) and `skills/doc/SKILL.md` (assembly).
 - Test changes by running the skill in a scratch directory and going through a full session.

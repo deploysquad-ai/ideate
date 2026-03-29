@@ -22,8 +22,9 @@ Ideate is a [Claude Code](https://claude.ai/code) plugin for the messy, early ph
 
 ## Install
 
-```bash
-claude plugin add ideate
+```
+/plugin marketplace add deploysquad-ai/ideate
+/plugin install ideate@deploysquad-ai/ideate
 ```
 
 Then navigate to any project directory and run `/ideate`.
