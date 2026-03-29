@@ -1,0 +1,11 @@
+# Claude Code local settings
+.claude/
+
+# Ideate session data (created in user's working directory)
+.ideate/
+
+# OS files
+.DS_Store
+
+# Plan and spec files (internal development docs)
+docs/superpowers/
