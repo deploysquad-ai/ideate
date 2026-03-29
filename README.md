@@ -1,8 +1,54 @@
-# Ideate
+<p align="center">
+  <h1 align="center">Ideate</h1>
+  <p align="center"><strong>Ramble freely. Ship a structured brief.</strong></p>
+  <p align="center">
+    <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="MIT License"></a>
+    <img src="https://img.shields.io/badge/version-0.1.0-green.svg" alt="Version 0.1.0">
+    <img src="https://img.shields.io/badge/Claude_Code-plugin-8A2BE2.svg" alt="Claude Code Plugin">
+  </p>
+</p>
 
-**Turn conversations into structured project briefs.**
+---
 
-Ideate is a [Claude Code](https://claude.ai/code) plugin for the early, exploratory phase of software projects. Describe your idea conversationally — ramble, pivot, ask questions — while Ideate helps you explore tangents via git-like branching, extracts structured artifacts (features, decisions, constraints, personas), and produces a shareable document as the session's deliverable.
+<table>
+<tr>
+<th width="50%">What's in your head</th>
+<th width="50%">What Ideate produces</th>
+</tr>
+<tr>
+<td>
+
+*"So it's like a payments thing... maybe freemium? Or flat rate. Actually we need OAuth first. Wait, who's even using this — developers? Small businesses? Both? And there's a compliance thing someone mentioned..."*
+
+</td>
+<td>
+
+```markdown
+# Payments Platform — Project Brief
+
+## Goals
+- Launch MVP in Q3 targeting SMB merchants
+
+## Personas
+- Small business owner (non-technical)
+- Developer integrating via API
+
+## Features
+- Freemium tier with usage-based pricing
+- OAuth2 via Google/GitHub
+- Merchant dashboard with real-time analytics
+
+## Decisions
+- Freemium over flat-rate (validated via branch)
+- OAuth-only, no email/password (security)
+
+## Constraints
+- PCI DSS compliance required at launch
+```
+
+</td>
+</tr>
+</table>
 
 ## Install
 
@@ -10,47 +56,87 @@ Ideate is a [Claude Code](https://claude.ai/code) plugin for the early, explorat
 claude plugin add ideate
 ```
 
-## Quick Start
+Then navigate to any project directory and run `/ideate`.
 
-1. Navigate to your project directory
-2. Run `/ideate`
-3. Start describing your idea
+## See It In Action
 
-Ideate will guide you through the ideation process, suggest branches when you want to explore tangents, extract artifacts as ideas solidify, and generate a structured document when you're ready.
+```
+You:  I want to build a payments platform for small businesses
+
+  Ideate: Got it. I've started a session for "Payments Platform."
+  What kind of businesses are you targeting?
+
+You:  Mostly restaurants and retail. But I'm torn on the pricing model —
+      should it be freemium or flat monthly?
+
+  Ideate: That's worth exploring. I'll branch into "pricing-model" so we
+  can think through this without losing the main thread.
+
+  [branch: pricing-model]
+
+You:  Freemium makes sense for acquisition, but flat-rate is simpler...
+      actually, what if we do freemium with usage-based pricing above
+      a threshold?
+
+  Ideate: That's a strong hybrid. I'm extracting this as a decision:
+  ✓ Decision — "Freemium with usage-based pricing"
+  Ready to merge this back?
+
+You:  Yeah, merge it.
+
+  Ideate: Merged. I also noticed a feature forming — extracting:
+  ✓ Feature — "Tiered pricing engine"
+  Back on main. What about authentication?
+```
+
+No special syntax. No forms. Just talk through your idea — Ideate handles the structure.
 
 ## How It Works
 
-### Branching
+<table>
+<tr>
+<td width="33%" align="center">
+<h3>Branch</h3>
+<p>Explore tangents in isolation. Like git branches for your thinking — merge the conclusions, abandon the dead ends.</p>
+</td>
+<td width="33%" align="center">
+<h3>Extract</h3>
+<p>As ideas solidify, Ideate pulls out typed artifacts: features, decisions, constraints, personas, goals, and modules.</p>
+</td>
+<td width="33%" align="center">
+<h3>Document</h3>
+<p>Run <code>/ideate.doc</code> to assemble everything into a structured brief you can hand off, share, or build from.</p>
+</td>
+</tr>
+</table>
 
-When your thinking diverges, Ideate creates a branch — an isolated thread where you can explore a tangent without polluting the main conversation. Like a git branch, you can merge it back (keeping the conclusions) or abandon it (keeping nothing).
+### Branching model
+
+When your thinking diverges, Ideate creates a branch — an isolated thread where you can explore without polluting the main conversation.
 
 ```
 Main thread: "Building a payments platform..."
-  └── Branch: payment-models
-      ├── Commit 1: Exploring freemium vs flat-rate
-      ├── Commit 2: User leaning toward freemium
-      └── Commit 3 — Merge: "Freemium with usage-based pricing"
-  └── Branch: auth-approach
-      ├── Commit 1: Considering OAuth vs email/password
-      └── Commit 2 — Merge: "OAuth2 via Google/GitHub only"
+  └── pricing-model
+  │   ├── Exploring freemium vs flat-rate
+  │   ├── Landed on freemium with usage tiers
+  │   └── ✓ Merged → Decision + Feature extracted
+  └── auth-approach
+      ├── OAuth vs email/password
+      └── ✓ Merged → "OAuth2 via Google/GitHub only"
 ```
 
-### Artifact Extraction
+### Artifact types
 
-As ideas solidify, Ideate extracts them into typed artifacts:
+| Type | What it captures |
+|---|---|
+| **Feature** | What the product does |
+| **Decision** | What was decided and why |
+| **Constraint** | Technical or business limits |
+| **Persona** | Who uses this |
+| **Goal** | What success looks like |
+| **Module** | Functional subsystems |
 
-- **Features** — what the product does
-- **Decisions** — what was decided and why
-- **Constraints** — technical or business limits
-- **Personas** — who uses this
-- **Goals** — what success looks like
-- **Modules** — functional subsystems
-
-Artifacts are stored as individual markdown files in `.ideate/artifacts/` — human-readable, diffable, and always reflecting the latest state.
-
-### Document Generation
-
-Run `/ideate.doc` to assemble all artifacts and merged conclusions into a structured Markdown document. This is the deliverable — the thing you hand off, share, or act on.
+Artifacts are stored as individual markdown files in `.ideate/artifacts/` — human-readable, diffable, always current.
 
 ## Commands
 
@@ -62,31 +148,37 @@ Run `/ideate.doc` to assemble all artifacts and merged conclusions into a struct
 | `/ideate.doc` | Generate the session document |
 | `/ideate.research <topic>` | Research similar products and prior art |
 
-Most of the time, you won't need explicit commands — Ideate detects your intent conversationally and acts accordingly.
+Most of the time you won't need these — Ideate detects your intent conversationally.
 
 ## Session Data
 
-Ideate stores session state in a `.ideate/` directory in your working directory. It's all markdown — you can browse, edit, or delete it with any text editor.
+All state lives in `.ideate/` as plain markdown. Browse it, edit it, or delete it with any text editor.
 
 ```
 .ideate/
   session.md        — session metadata
   main.md           — merged conclusions
-  branches/         — branch history
-  artifacts/        — extracted artifacts
+  branches/         — branch history (append-only)
+  artifacts/        — extracted artifacts (mutable, always current)
   output/           — generated documents
 ```
+
+## Why This Exists
+
+The gap between "I have an idea" and "here's a document someone else can act on" is where most projects lose momentum. You either skip straight to building (and discover missing requirements later) or spend days writing specs that nobody reads.
+
+Ideate fills that gap. Talk through your idea like you would with a coworker. Walk away with a structured brief.
 
 ## Documentation
 
 - [Getting Started](docs/getting-started.md)
-- [Concepts](docs/concepts.md) — branching model, artifacts, session lifecycle
-- [Skills Reference](docs/skills-reference.md) — detailed command documentation
-- [Example: Payments Platform](docs/examples/payments-platform.md) — full session walkthrough
+- [Concepts](docs/concepts.md) — branching, artifacts, session lifecycle
+- [Skills Reference](docs/skills-reference.md) — detailed command docs
+- [Example: Payments Platform](docs/examples/payments-platform.md) — full walkthrough
 
 ## Contributing
 
-Ideate is open source under the MIT License. See [CLAUDE.md](CLAUDE.md) for development instructions.
+Ideate is open source under the MIT License. See [CLAUDE.md](CLAUDE.md) for development guidelines.
 
 ## License
 
