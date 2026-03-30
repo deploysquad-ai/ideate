@@ -8,10 +8,7 @@
   "plugins": [
     {
       "name": "ideate",
-      "source": {
-        "source": "url",
-        "url": "https://github.com/deploysquad-ai/ideate.git"
-      },
+      "source": "./plugin",
       "description": "Turn conversations into structured project briefs using git-like branching, artifact extraction, and document generation. Invoke with /ideate."
     }
   ]
