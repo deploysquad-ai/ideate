@@ -53,4 +53,22 @@ When editing skill files:
 - Keep the prompt focused and specific. Don't add generic LLM instructions.
 - Intent detection patterns in `skills/ideate/SKILL.md` should be concrete examples, not vague descriptions.
 - Artifact schemas must stay in sync across `skills/ideate/SKILL.md` (extraction) and `skills/doc/SKILL.md` (assembly).
-- Test changes by running the skill in a scratch directory and going through a full session.
+- Test changes by running the skill in a scratch directory:
+  ```bash
+  mkdir /tmp/ideate-test && cd /tmp/ideate-test && git init
+  # Then invoke /ideate in that directory with the plugin loaded
+  ```
+
+## Adding a New Skill
+
+1. Create `skills/<skill-name>/SKILL.md` with YAML frontmatter (`name`, `description`).
+2. No changes to `plugin.json` needed — skills are auto-discovered from `skills/*/SKILL.md`.
+3. The skill name in frontmatter becomes the slash command (`/skill-name`).
+
+## Plugin Validation
+
+Check manifest validity before publishing:
+```bash
+cat .claude-plugin/plugin.json      # plugin metadata
+cat .claude-plugin/marketplace.json # marketplace source field must be "." for root-level plugins
+```
