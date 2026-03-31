@@ -59,7 +59,7 @@ Artifacts: [[<Type> - <Name>]], [[<Type> - <Name>]], ...
 
 ## Abandon
 
-1. **Confirm with the user:** "Abandon branch `<branch-name>`? Nothing from it will go to main."
+1. **Confirm with the user** (if invoked directly, no fork brief): "Abandon branch `<branch-name>`? Nothing from it will go to main." If invoked via fork brief, skip this confirmation — it was already confirmed by the main `/ideate` skill before the brief was written.
 2. If confirmed:
    - Append a final commit to the branch file:
    ```

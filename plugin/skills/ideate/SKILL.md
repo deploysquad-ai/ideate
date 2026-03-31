@@ -154,7 +154,7 @@ Branched from: <parent thread from session.md>
 Merge target: main.md
 ```
 
-3. Invoke `/ideate.merge`. After it returns the conclusion paragraph, continue the conversation on main.
+3. Invoke `/ideate.merge`. After it returns the conclusion paragraph, continue the conversation on main. If `/ideate.merge` is not available: say "The `/ideate.merge` skill isn't loaded. You can run it separately to merge this branch." and delete `.ideate/fork-brief.md`.
 4. Do not write to `main.md` yourself — `/ideate.merge` handles that.
 
 ---
@@ -177,7 +177,7 @@ Branched from: <parent thread from session.md>
 Merge target: main.md
 ```
 
-4. Invoke `/ideate.merge`. After it returns, continue the conversation on the parent thread.
+4. Invoke `/ideate.merge`. After it returns, continue the conversation on the parent thread. If `/ideate.merge` is not available: say "The `/ideate.merge` skill isn't loaded. You can run it separately to abandon this branch." and delete `.ideate/fork-brief.md`.
 5. Do not modify the branch file or `session.md` yourself — `/ideate.merge` handles that.
 
 Never silently abandon a branch. Always confirm first.
