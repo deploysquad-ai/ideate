@@ -1,7 +1,15 @@
 ---
 name: ideate.branch
 description: Create a new ideation branch or switch to an existing one. Use when the user wants to explicitly branch to explore a tangent, or switch between branches. Arguments — branch name (optional for creation, required for switching).
+context: fork
 ---
+
+## Startup
+
+1. Read `.ideate/fork-brief.md` to get `Topic`, `Why`, `Current thread`, `What we know so far`, and `Key questions`.
+2. Read `.ideate/session.md` for current session state.
+3. Delete `.ideate/fork-brief.md`.
+4. Use the brief's `What we know so far` and `Key questions` as the branch's opening context — write it to the branch file under `## Context` (see Create a New Branch below).
 
 # Branch — Create or Switch Branches
 
@@ -75,3 +83,11 @@ Commit format — append to the branch file:
 ```
 
 Not every conversational turn is a commit. Only inflection points — moments where the direction, understanding, or artifact set changed.
+
+## Return to Main Context
+
+When the user signals they are done with this branch (signals: "I'm done", "let's go back", "save this", "that's enough for now"), write the final commit to the branch file, then say exactly:
+
+> "Branch `<slug>` saved. Run `/ideate` to return to the main thread, or `/ideate.merge` to bring these conclusions back."
+
+Do not continue the conversation after this message. The main context resumes by re-reading `session.md`.
