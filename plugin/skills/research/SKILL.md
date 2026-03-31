@@ -6,9 +6,8 @@ context: fork
 
 # Startup
 
-1. Check if `.ideate/fork-brief.md` exists. If it does, read it to get `Topic`, `Why`, `What we know so far`, and `Key questions`, then continue to step 2. If it does not exist (skill was invoked directly), skip steps 2–3 and proceed to the main body below.
+1. Check if `.ideate/fork-brief.md` exists. If it does, read it to get `Topic`, `Why`, `What we know so far`, and `Key questions`, then continue to step 2. If it does not exist (skill was invoked directly), skip step 2 and proceed to the main body below.
 2. Delete `.ideate/fork-brief.md`.
-3. Use the brief's `Key questions` to drive search queries — not generic exploration. Each search query should directly address one of the key questions.
 
 # Research — External Context for Ideation
 
@@ -28,6 +27,8 @@ This skill searches for similar products, prior art, and relevant information to
    - Direct competitors or similar products
    - Technical approaches or architectural patterns
    - Market landscape or user expectations
+
+   If `What we know so far` was loaded from the fork brief, use it to avoid re-researching already-known ground. Use `Why` to frame the relevance of findings.
 
 3. **Synthesize findings.** Summarize what you found in the context of the current ideation thread. Don't dump raw search results — interpret them:
    - "There are 3 existing tools that do something similar: X, Y, Z. Here's how they differ from what you're describing..."
@@ -62,6 +63,8 @@ Keep research focused and relevant:
 
 ## Return to Main Context
 
-After recording findings in the branch file, return a 3–5 sentence synthesis to the main context. This synthesis is the only research content that lands in the main conversation — full search results and raw findings stay in this fork. Format the return as:
+**If this skill was invoked via a fork brief (fork path):** After recording findings in the branch file (if on a branch) or the main thread, return a 3–5 sentence synthesis to the main context. Full search results and raw findings stay in this fork — only the synthesis lands in the main conversation. Format the return as:
 
 > "Research complete. [3–5 sentence synthesis of key findings and their implications for the current ideation thread.]"
+
+**If invoked directly (no fork brief):** No special return is needed — the synthesis is already part of the current conversation.
