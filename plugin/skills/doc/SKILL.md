@@ -4,7 +4,7 @@ description: Generate a structured document from the current ideation session. A
 context: fork
 ---
 
-## Startup
+# Startup
 
 1. Check if `.ideate/fork-brief.md` exists. If it does, read it to get `Session dir`, `Project name`, `Active threads`, and `Artifact count`, then continue to step 2. If it does not exist (skill was invoked directly), skip step 2 and proceed to the main body below.
 2. Delete `.ideate/fork-brief.md`.

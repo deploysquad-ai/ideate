@@ -4,10 +4,11 @@ description: Squash-merge the current branch back to main, or abandon it. Compre
 context: fork
 ---
 
-## Startup
+# Startup
 
 1. Check if `.ideate/fork-brief.md` exists. If it does, read it to get `Operation` (merge or abandon), `Branch` slug, `Branched from`, and `Merge target`, then continue to step 2. If it does not exist (skill was invoked directly), skip step 2 and proceed to the main body below.
 2. Delete `.ideate/fork-brief.md`.
+3. If `Operation` is `abandon`, skip Pre-Merge Checks and Squash Merge — proceed directly to the `## Abandon` section. If `Operation` is `merge` or no fork brief was present, proceed with Pre-Merge Checks as normal.
 
 # Merge — Squash-Merge or Abandon a Branch
 
@@ -92,4 +93,4 @@ For merge:
 For abandon:
 > "Branch `<branch-name>` abandoned. Back on main."
 
-**If invoked directly (no fork brief):** Present the full merge output as normal (step 7 of Squash Merge or step 2 of Abandon).
+**If invoked directly (no fork brief):** No special return needed — the full merge output was already delivered in step 7 of Squash Merge (or at the end of Abandon step 2/3).
