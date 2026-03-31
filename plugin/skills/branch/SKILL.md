@@ -4,9 +4,9 @@ description: Create a new ideation branch or switch to an existing one. Use when
 context: fork
 ---
 
-## Startup
+# Startup
 
-1. Read `.ideate/fork-brief.md` to get `Topic`, `Why`, `Current thread`, `What we know so far`, and `Key questions`.
+1. Check if `.ideate/fork-brief.md` exists. If it does, read it to get `Topic`, `Why`, `Current thread`, `What we know so far`, and `Key questions`, then continue to step 2. If it does not exist (skill was invoked directly, not via the main `/ideate` skill), skip steps 2–4 and proceed directly to the main skill body below.
 2. Read `.ideate/session.md` for current session state.
 3. Delete `.ideate/fork-brief.md`.
 4. Use the brief's `What we know so far` and `Key questions` as the branch's opening context — write it to the branch file under `## Context` (see Create a New Branch below).
@@ -25,7 +25,7 @@ This skill handles explicit branch operations. Most branching happens conversati
 1. Read `.ideate/session.md` to confirm the session is active.
 2. Slugify the branch name: lowercase, replace spaces with hyphens, strip special characters.
 3. Check if `.ideate/branches/<branch-name>.md` already exists. If it does, switch to it instead (see below).
-4. Read `.ideate/main.md` and relevant artifacts to build scoped context for the branch.
+4. If a fork brief was read in Startup (step 1), skip this step — the `## Context` block is already composed from the brief. If no fork brief was present, read `.ideate/main.md` and relevant artifacts to build scoped context for the branch.
 5. Create `.ideate/branches/<branch-name>.md`:
 
 ```
@@ -86,8 +86,8 @@ Not every conversational turn is a commit. Only inflection points — moments wh
 
 ## Return to Main Context
 
-When the user signals they are done with this branch (signals: "I'm done", "let's go back", "save this", "that's enough for now"), write the final commit to the branch file, then say exactly:
+When the user signals they are done with this branch (signals: "I'm done", "let's go back", "save this", "that's enough for now" — at the end of the branch session, not mid-conversation), write the final commit to the branch file, then say exactly (substituting `<branch-slug>` with the slug from this session):
 
-> "Branch `<slug>` saved. Run `/ideate` to return to the main thread, or `/ideate.merge` to bring these conclusions back."
+> "Branch `<branch-slug>` saved. Run `/ideate` to return to the main thread, or `/ideate.merge` to bring these conclusions back."
 
 Do not continue the conversation after this message. The main context resumes by re-reading `session.md`.
