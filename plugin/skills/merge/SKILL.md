@@ -1,7 +1,13 @@
 ---
 name: ideate.merge
 description: Squash-merge the current branch back to main, or abandon it. Compresses branch exploration into a conclusion with extracted artifacts. Use when the user is done exploring a tangent and wants to bring conclusions back to the main thread.
+context: fork
 ---
+
+## Startup
+
+1. Check if `.ideate/fork-brief.md` exists. If it does, read it to get `Operation` (merge or abandon), `Branch` slug, `Branched from`, and `Merge target`, then continue to step 2. If it does not exist (skill was invoked directly), skip step 2 and proceed to the main body below.
+2. Delete `.ideate/fork-brief.md`.
 
 # Merge — Squash-Merge or Abandon a Branch
 
@@ -14,7 +20,7 @@ This skill handles merging a branch's conclusions back to the main thread, or ab
 
 ## Pre-Merge Checks
 
-1. Read `.ideate/session.md` to get the active branch.
+1. If a fork brief was read in Startup, use the `Branch` slug from the brief. Also read `.ideate/session.md` to verify session state. If no fork brief was present, read `.ideate/session.md` to get the active branch.
 2. If `Active branch` is `main`, there's nothing to merge. Say: "You're already on main — no branch to merge."
 3. Read the active branch file from `.ideate/branches/<branch-name>.md`.
 4. If the branch has no commits beyond the initial context, warn: "This branch has no commits yet. Want to abandon it, or keep exploring?"
@@ -75,3 +81,15 @@ Say: "This branch explored <topic> but didn't reach a clear conclusion. I can ei
 Which do you prefer?"
 
 If they choose to summarize, compose a conclusion that honestly states what was explored without claiming a decision was made: "Explored X and Y approaches. Leaning toward X but no firm decision. Key considerations: ..."
+
+## Return to Main Context
+
+**If this skill was invoked via a fork brief (fork path):** After completing the merge or abandon, return only the conclusion to the main context. Format:
+
+For merge:
+> "Merged branch `<branch-name>`. **Conclusion:** <one paragraph summary of what was decided> **Artifacts:** <list>"
+
+For abandon:
+> "Branch `<branch-name>` abandoned. Back on main."
+
+**If invoked directly (no fork brief):** Present the full merge output as normal (step 7 of Squash Merge or step 2 of Abandon).
