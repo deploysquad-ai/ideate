@@ -1,7 +1,13 @@
 ---
 name: ideate.doc
 description: Generate a structured document from the current ideation session. Assembles all extracted artifacts and merged conclusions into a shareable Markdown brief. Use when the user wants to see or produce the session's deliverable.
+context: fork
 ---
+
+# Startup
+
+1. Check if `.ideate/fork-brief.md` exists. If it does, read it to get `Session dir`, `Project name`, `Active threads`, and `Artifact count`, then continue to step 2. If it does not exist (skill was invoked directly), skip step 2 and proceed to the main body below.
+2. Delete `.ideate/fork-brief.md`.
 
 # Doc — Generate Session Document
 
@@ -13,7 +19,7 @@ This skill assembles all extracted artifacts and merged conclusions into a struc
 
 ## Generation Process
 
-1. **Read session metadata.** Read `.ideate/session.md` to get the project name.
+1. **Read session metadata.** If a fork brief was read in Startup, use the `Project name` from the brief. Also read `.ideate/session.md` to get current artifact status. If no fork brief was present, read `.ideate/session.md` for the project name.
 
 2. **Read all artifacts.** Read every file in `.ideate/artifacts/`. Group them by type:
    - Goals
@@ -136,3 +142,11 @@ Before generating, scan for common gaps and warn the user:
 - No features? "No features extracted — the document will be light on 'what does it do'."
 
 Let the user decide whether to address gaps or generate anyway.
+
+## Return to Main Context
+
+**If this skill was invoked via a fork brief (fork path):** After writing the output file, return only the path and artifact summary to the main context. The full document content stays in this fork. Format the return as:
+
+> "Document generated at `.ideate/output/<filename>.md`. **Summary:** <N> artifacts (<confirmed count> confirmed, <draft count> still draft)."
+
+**If invoked directly (no fork brief):** Present the full output as normal (step 5 of Generation Process).
