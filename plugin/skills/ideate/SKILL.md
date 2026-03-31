@@ -65,6 +65,8 @@ Then proceed to Section 2: Conversational Facilitation.
 
 ### When `.ideate/` ALREADY exists in the current working directory
 
+Before reading `session.md`: check if `.ideate/fork-brief.md` exists. If it does, it is a stale brief from an interrupted operation — delete it silently before proceeding.
+
 Read `session.md`. Check `Status:`.
 
 - If `Status: active` — say:
@@ -116,23 +118,22 @@ While on any thread (main or branch), monitor the user's messages for these sign
 
 **Action:**
 1. Confirm: "Want to branch here and explore that as its own thread?"
-2. If user confirms (or the signal was explicit enough to act immediately): create a branch.
-3. Slugify the branch topic: lowercase, spaces to hyphens, strip punctuation. Example: "What if we made it open source?" → `open-source`.
-4. Create `.ideate/branches/<slug>.md`:
+2. If user confirms (or the signal was explicit enough to act immediately): slugify the branch topic (lowercase, spaces to hyphens, strip punctuation). Example: "What if we made it open source?" → `open-source`.
+3. Write `.ideate/fork-brief.md`:
 
 ```markdown
-# Branch: <Human-readable topic>
+# Fork Brief
 
-Created: <ISO timestamp>
-Branched from: <current thread name>
-Status: active
-
-## Thread
-<record conversation from here forward>
+Operation: branch
+Topic: <slugified branch topic>
+Why: <the user's message that triggered branching>
+Current thread: <current thread from session.md>
+What we know so far: <2–4 sentences of relevant context from the conversation>
+Key questions: <what we're trying to answer on this branch>
 ```
 
-5. Update `session.md`: add branch to Thread History, set `Current thread: <slug>`.
-6. Tell the user: "Branching to '<topic>'. We can merge this back to main when you're ready."
+4. Invoke `/ideate.branch`. After it returns its summary, resume the conversation on the current thread.
+5. Do not create the branch file yourself — `/ideate.branch` handles that.
 
 ---
 
@@ -140,21 +141,21 @@ Status: active
 
 **Signals:** "OK let's go back to main", "let's merge this", "bring this back", "I think we have something here", "let's reconnect this to the main idea"
 
-**Action:** Invoke the merge protocol (defined in `/ideate.merge` skill, if available). If that skill is not available, do the following inline:
-
-1. Summarize the key conclusions from the current branch in 2–4 bullet points.
-2. Ask: "Does this capture what we landed on?"
-3. On confirmation, append to `main.md` under `## Merged Conclusions`:
+**Action:**
+1. Read `session.md` to get the active branch slug and its parent thread.
+2. Write `.ideate/fork-brief.md`:
 
 ```markdown
-### From branch: <slug> (<date>)
-- <conclusion 1>
-- <conclusion 2>
-...
+# Fork Brief
+
+Operation: merge
+Branch: <active branch slug>
+Branched from: <parent thread from session.md>
+Merge target: main.md
 ```
 
-4. Update `session.md`: mark branch status as `merged`, set `Current thread: main`.
-5. Say: "Merged. We're back on the main thread."
+3. Invoke `/ideate.merge`. After it returns the conclusion paragraph, continue the conversation on main.
+4. Do not write to `main.md` yourself — `/ideate.merge` handles that.
 
 ---
 
@@ -164,8 +165,20 @@ Status: active
 
 **Action:**
 1. Always confirm: "Abandon '<branch topic>'? This will mark it as abandoned but keep the file."
-2. On confirmation: update branch file `Status: abandoned`, update `session.md` to mark branch abandoned, set `Current thread` back to parent thread (usually `main`).
-3. Say: "Abandoned. Back on '<parent thread>'."
+2. On confirmation: read `session.md` to get the active branch slug and its parent thread.
+3. Write `.ideate/fork-brief.md`:
+
+```markdown
+# Fork Brief
+
+Operation: abandon
+Branch: <active branch slug>
+Branched from: <parent thread from session.md>
+Merge target: main.md
+```
+
+4. Invoke `/ideate.merge`. After it returns, continue the conversation on the parent thread.
+5. Do not modify the branch file or `session.md` yourself — `/ideate.merge` handles that.
 
 Never silently abandon a branch. Always confirm first.
 
@@ -175,7 +188,22 @@ Never silently abandon a branch. Always confirm first.
 
 **Signals:** "let's generate the doc", "write this up", "give me the document", "produce the output", "I'm ready for the deliverable", "can you write the spec/brief/README"
 
-**Action:** Invoke `/ideate.doc`. If that skill is not available, say: "The `/ideate.doc` skill isn't loaded. You can run it separately to generate the document from this session."
+**Action:**
+1. Read `session.md` to get the project name, thread history, and artifact index.
+2. Write `.ideate/fork-brief.md`:
+
+```markdown
+# Fork Brief
+
+Operation: doc
+Session dir: .ideate/
+Project name: <project name from session.md>
+Active threads: <list of active/merged branch slugs from session.md Thread History>
+Artifact count: <count of entries in session.md Artifact Index>
+```
+
+3. Invoke `/ideate.doc`. After it returns the output path and artifact summary, continue the conversation.
+4. If `/ideate.doc` is not available: say "The `/ideate.doc` skill isn't loaded. You can run it separately to generate the document from this session." and delete `.ideate/fork-brief.md`.
 
 ---
 
@@ -183,7 +211,23 @@ Never silently abandon a branch. Always confirm first.
 
 **Signals:** "can you research...", "look this up", "what do you know about...", "are there existing solutions for...", "find examples of..."
 
-**Action:** Invoke `/ideate.research`. If that skill is not available, say: "The `/ideate.research` skill isn't loaded. You can run it separately to pull in external research."
+**Action:**
+1. Read `session.md` to get the current thread.
+2. Write `.ideate/fork-brief.md`:
+
+```markdown
+# Fork Brief
+
+Operation: research
+Topic: <the thing the user asked to research>
+Why: <the user's message that triggered research>
+Current thread: <current thread from session.md>
+What we know so far: <2–4 sentences of relevant context from the conversation>
+Key questions: <specific questions the research should answer>
+```
+
+3. Invoke `/ideate.research`. After it returns the synthesis, continue the conversation.
+4. If `/ideate.research` is not available: say "The `/ideate.research` skill isn't loaded. You can run it separately." and delete `.ideate/fork-brief.md`.
 
 ---
 
@@ -388,3 +432,5 @@ At the start of each session (after initialization or resume), load context in t
 4. Do NOT pre-read all artifact files. Read individual artifact files only when needed (e.g., when the user asks about one, or when checking for duplicates before extraction).
 
 **Keep context loading minimal.** Read only what you need to continue the conversation. Avoid loading entire artifact directories at session start.
+
+**Note:** Do not read `.ideate/fork-brief.md` during context loading. If it exists, it is stale — delete it (see Section 1 initialization for the cleanup rule).
