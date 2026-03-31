@@ -4,7 +4,7 @@ description: Generate a structured document from the current ideation session. A
 context: fork
 ---
 
-# Startup
+## Startup
 
 1. Check if `.ideate/fork-brief.md` exists. If it does, read it to get `Session dir`, `Project name`, `Active threads`, and `Artifact count`, then continue to step 2. If it does not exist (skill was invoked directly), skip step 2 and proceed to the main body below.
 2. Delete `.ideate/fork-brief.md`.
@@ -121,11 +121,14 @@ This skill assembles all extracted artifacts and merged conclusions into a struc
 > - <Type> - <Name>
 ```
 
-5. **Present to the user.** After writing the file, say:
+5. **Present to the user.**
+   **If invoked directly (no fork brief):** After writing the file, say:
    > "Document generated at `.ideate/output/<filename>.md`.
    > **Summary:** <N> artifacts (<confirmed count> confirmed, <draft count> still draft).
    > <List any sections that are empty or thin — e.g., 'No personas were extracted — you may want to revisit who this is for.'>
    > Want me to read it back to you, or make changes to any artifacts before regenerating?"
+
+   **If invoked via fork brief (fork path):** Skip this step — see `## Return to Main Context` below.
 
 6. **Update session status.** Update `.ideate/session.md` to set `Status: complete`.
 
