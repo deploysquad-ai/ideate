@@ -47,7 +47,8 @@ Created from: <current branch — usually "main">
 
 6. Update `.ideate/session.md` — set `Active branch: <branch-name>`.
 7. Tell the user: "Created branch `<branch-name>`. We're now exploring this topic in isolation — nothing here touches the main thread until you merge."
-8. Continue the conversation scoped to the branch topic.
+8. **Recommend context isolation.** Say: "For the cleanest context, start a new conversation and run `/ideate` — it'll load just this branch's context from the files, without carrying the main thread discussion in memory." This is the intended workflow: branches are separate thinking sessions, not continuations of the same conversation.
+9. Continue the conversation scoped to the branch topic. If continuing in the same session, treat the branch file and relevant artifacts as the only context — do not reference or build on conversation history from before the branch was created.
 
 ## Switch to an Existing Branch
 

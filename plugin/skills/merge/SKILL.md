@@ -28,9 +28,9 @@ This skill handles merging a branch's conclusions back to the main thread, or ab
 
 ## Squash Merge
 
-1. **Read the full branch file** to understand everything that was explored.
-2. **Compose the conclusion.** Summarize the branch into:
-   - A one-paragraph summary of what was explored and what was decided
+1. **Read the full branch file** to understand what was explored.
+2. **Compose a squash conclusion — decisions only, not a retelling.** Write:
+   - 2–4 sentences: what question was explored, what was decided, and why. Do not narrate the exploration journey or list what was considered step-by-step. Write it like a commit message, not a story.
    - A list of artifacts extracted or updated during this branch
 3. **Write the merge commit** — append to the branch file:
 
@@ -45,7 +45,7 @@ This skill handles merging a branch's conclusions back to the main thread, or ab
 
 ```
 ## Merge: <branch-name>
-<The conclusion paragraph from step 2>
+<The 2–4 sentence squash conclusion from step 2 — decisions and rationale only>
 Artifacts: [[<Type> - <Name>]], [[<Type> - <Name>]], ...
 ```
 
@@ -55,7 +55,8 @@ Artifacts: [[<Type> - <Name>]], [[<Type> - <Name>]], ...
    > **Conclusion:** <summary>
    > **Artifacts captured:** <list>
    > We're back on the main thread."
-8. **Continue on main** — read `main.md` to have the full context of all merged conclusions.
+8. **Recommend a fresh session for clean context.** Say: "For the leanest context, start a new conversation and run `/ideate` — it'll resume from main with only the merged conclusions, not the full branch discussions." This is optional but important: continuing in the same conversation means the branch exploration still occupies the context window. A new session loads only from `.ideate/` files.
+9. **Continue on main** — read `main.md` to have the full context of all merged conclusions.
 
 ## Abandon
 

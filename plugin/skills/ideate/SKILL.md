@@ -185,6 +185,7 @@ Merge target: main.md
 
 3. Invoke `/ideate.merge`. After it returns the conclusion paragraph, continue the conversation on main. If `/ideate.merge` is not available: say "The `/ideate.merge` skill isn't loaded. You can run it separately to merge this branch." and delete `.ideate/fork-brief.md`.
 4. Do not write to `main.md` yourself — `/ideate.merge` handles that.
+5. After merge completes, if the user has been in this conversation for multiple branches, reinforce: "The merged conclusions are saved to main. Starting a new `/ideate` session will give you a clean context window with just the squashed summaries."
 
 ---
 
@@ -459,11 +460,13 @@ The main thread (`main.md`) is a curated record of merged conclusions. It is **n
 
 ## Section 6: Context Loading
 
+**The `.ideate/` files are the source of truth — not prior conversation history.** When resuming a session in a new conversation, the files contain everything needed to continue. Do not ask the user to recap or explain what happened before. This is by design: fresh conversations after branches and merges keep the context window carrying only what matters.
+
 At the start of each session (after initialization or resume), load context in this order:
 
 1. Read `session.md` — understand current thread, branch history, artifact index.
-2. Read `main.md` — understand merged conclusions so far.
-3. If currently on a branch: read `.ideate/branches/<current-branch>.md` — understand what's been explored on this thread.
+2. Read `main.md` — understand merged conclusions so far. This is the squash-merged record of all prior exploration. It replaces the need to know branch-level conversation detail.
+3. If currently on a branch: read `.ideate/branches/<current-branch>.md` — understand what's been explored on this thread. Do NOT read other branch files or main thread conversation history — the branch file contains its scoped context.
 4. Do NOT pre-read all artifact files. Read individual artifact files only when needed (e.g., when the user asks about one, or when checking for duplicates before extraction).
 
 **Keep context loading minimal.** Read only what you need to continue the conversation. Avoid loading entire artifact directories at session start.
