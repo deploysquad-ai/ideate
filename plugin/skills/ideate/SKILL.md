@@ -69,7 +69,11 @@ Before reading `session.md`: check if `.ideate/fork-brief.md` exists. If it does
 
 Read `session.md`. Check `Status:`.
 
-- If `Status: active` — say:
+- If `Status: active` — check if the SessionStart hook injected an `[Ideation session resumed after /clear]` context message earlier in this conversation.
+
+  **If yes (post-clear resume):** Skip the confirmation prompt. Go directly to Section 6: Context Loading. The user `/clear`ed to get clean context — asking "pick up where you left off?" wastes a turn.
+
+  **If no (fresh session start):** Say:
 
   > It looks like you have an active session: "<idea from session.md>". Want to pick up where you left off, or start fresh?
 
@@ -206,7 +210,7 @@ Branched from: <parent thread from session.md>
 Merge target: main.md
 ```
 
-4. Invoke `/ideate.merge`. After it returns, continue the conversation on the parent thread. If `/ideate.merge` is not available: say "The `/ideate.merge` skill isn't loaded. You can run it separately to abandon this branch." and delete `.ideate/fork-brief.md`.
+4. Invoke `/ideate.merge`. After it returns with the `/clear` instruction, **stop**. Do not continue the conversation. The user needs to `/clear` then `/ideate` to resume on main with clean context. If `/ideate.merge` is not available: say "The `/ideate.merge` skill isn't loaded. You can run it separately to abandon this branch." and delete `.ideate/fork-brief.md`.
 5. Do not modify the branch file or `session.md` yourself — `/ideate.merge` handles that.
 
 Never silently abandon a branch. Always confirm first.
@@ -464,8 +468,10 @@ The main thread (`main.md`) is a curated record of merged conclusions. It is **n
 At the start of each session (after initialization or resume), load context in this order:
 
 1. Read `session.md` — understand current thread, branch history, artifact index.
-2. Read `main.md` — understand merged conclusions so far. This is the squash-merged record of all prior exploration. It replaces the need to know branch-level conversation detail.
-3. If currently on a branch: read `.ideate/branches/<current-branch>.md` — understand what's been explored on this thread. Do NOT read other branch files or main thread conversation history — the branch file contains its scoped context.
+2. **Branch-aware loading — this is critical for context efficiency:**
+   - If `Active branch` is `main`: read `main.md`. This is the squash-merged record of all prior exploration.
+   - **If `Active branch` is anything other than `main`: do NOT read `main.md`.** The branch file's `## Context` section already contains the scoped context for this branch. Reading main.md on a branch pulls in every prior merge summary — none of which is relevant to the branch's focus. If something from main becomes relevant mid-branch, read it on demand at that point.
+3. If on a branch: read `.ideate/branches/<current-branch>.md` — this is the only context you need. Do NOT read other branch files.
 4. Do NOT pre-read all artifact files. Read individual artifact files only when needed (e.g., when the user asks about one, or when checking for duplicates before extraction).
 
 **Keep context loading minimal.** Read only what you need to continue the conversation. Avoid loading entire artifact directories at session start.

@@ -55,8 +55,8 @@ Created from: <current branch — usually "main">
 2. Read `.ideate/branches/<branch-name>.md` to verify it exists and check its status.
 3. If status is `merged` or `abandoned`, warn: "Branch `<name>` was already <merged/abandoned>. Want to reopen it, or create a new one?"
 4. Update `.ideate/session.md` — set `Active branch: <branch-name>`.
-5. Read the branch file to restore context. Summarize where the branch left off.
-6. Tell the user: "Switched to branch `<branch-name>`. Here's where we left off: <summary>."
+5. Tell the user: "Switched to branch `<branch-name>`. Run `/clear` then `/ideate` to load it with clean context."
+6. **Stop here.** Same as branch creation — the user needs `/clear` to drop the current conversation context. The branch file has everything needed for the next session.
 
 ## List Branches
 

@@ -69,7 +69,9 @@ Artifacts: [[<Type> - <Name>]], [[<Type> - <Name>]], ...
    - Update branch status to `abandoned`.
    - Update `session.md` to set `Active branch: main`.
    - Check `.ideate/artifacts/` for any artifacts whose `Extracted from` references this branch and no other branch. Flag them to the user: "These artifacts were only extracted on the abandoned branch: <list>. Keep them or delete them?"
-3. **Continue on main.**
+3. **Tell the user:**
+   > "Branch `<branch-name>` abandoned. Run `/clear` then `/ideate` to continue on main with clean context."
+4. **Stop here.** Same as merge — the user needs `/clear` to drop the branch exploration from the context window.
 
 ## Empty Branch Merge
 
@@ -85,12 +87,6 @@ If they choose to summarize, compose a conclusion that honestly states what was 
 
 ## Return to Main Context
 
-**If this skill was invoked via a fork brief (fork path):** After completing the merge or abandon, return only the conclusion to the main context. Format:
+**Regardless of invocation path (fork brief or direct):** After completing the merge or abandon, the conversation should stop. The user runs `/clear` then `/ideate` to continue on main with clean context.
 
-For merge:
-> "Merged branch `<branch-name>`. **Conclusion:** <one paragraph summary of what was decided> **Artifacts:** <list>"
-
-For abandon:
-> "Branch `<branch-name>` abandoned. Back on main."
-
-**If invoked directly (no fork brief):** No special return needed — the full merge output was already delivered in step 7 of Squash Merge (or at the end of Abandon step 2/3).
+Do not return a conclusion to a calling skill for it to continue with. Do not resume ideation in the same conversation. The files are the handoff — main.md has the squash conclusion, session.md points to main, and the next `/ideate` invocation will load only what's needed.
