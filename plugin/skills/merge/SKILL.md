@@ -54,9 +54,8 @@ Artifacts: [[<Type> - <Name>]], [[<Type> - <Name>]], ...
    > "Merged branch `<branch-name>` back to main.
    > **Conclusion:** <summary>
    > **Artifacts captured:** <list>
-   > We're back on the main thread."
-8. **Recommend a fresh session for clean context.** Say: "For the leanest context, start a new conversation and run `/ideate` — it'll resume from main with only the merged conclusions, not the full branch discussions." This is optional but important: continuing in the same conversation means the branch exploration still occupies the context window. A new session loads only from `.ideate/` files.
-9. **Continue on main** — read `main.md` to have the full context of all merged conclusions.
+   > Run `/clear` then `/ideate` to continue on main with clean context — just the merged conclusions, no branch exploration history."
+8. **Stop here.** Do not continue the conversation. The merge is complete, main.md has the squash conclusion, and session.md points to main. The user needs to `/clear` so the next `/ideate` invocation loads only `session.md` + `main.md` — not the full branch discussions that are still in the context window.
 
 ## Abandon
 

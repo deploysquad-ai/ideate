@@ -161,7 +161,7 @@ What we know so far: <2–4 sentences of relevant context from the conversation>
 Key questions: <what we're trying to answer on this branch>
 ```
 
-4. Invoke `/ideate.branch`. After it returns its summary, resume the conversation on the current thread.
+4. Invoke `/ideate.branch`. After it returns with the `/clear` instruction, **stop**. Do not resume the conversation. The user needs to `/clear` then `/ideate` to start the branch with clean context.
 5. Do not create the branch file yourself — `/ideate.branch` handles that.
 
 ---
@@ -183,9 +183,8 @@ Branched from: <parent thread from session.md>
 Merge target: main.md
 ```
 
-3. Invoke `/ideate.merge`. After it returns the conclusion paragraph, continue the conversation on main. If `/ideate.merge` is not available: say "The `/ideate.merge` skill isn't loaded. You can run it separately to merge this branch." and delete `.ideate/fork-brief.md`.
+3. Invoke `/ideate.merge`. After it returns the conclusion and the `/clear` instruction, **stop**. Do not continue the conversation on main. The user needs to `/clear` then `/ideate` to resume with clean context. If `/ideate.merge` is not available: say "The `/ideate.merge` skill isn't loaded. You can run it separately to merge this branch." and delete `.ideate/fork-brief.md`.
 4. Do not write to `main.md` yourself — `/ideate.merge` handles that.
-5. After merge completes, if the user has been in this conversation for multiple branches, reinforce: "The merged conclusions are saved to main. Starting a new `/ideate` session will give you a clean context window with just the squashed summaries."
 
 ---
 
