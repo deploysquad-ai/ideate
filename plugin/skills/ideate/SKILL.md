@@ -152,21 +152,42 @@ While on any thread (main or branch), monitor the user's messages for these sign
 **Action:**
 1. Confirm: "Want to branch here and explore that as its own thread?"
 2. If user confirms (or the signal was explicit enough to act immediately): slugify the branch topic (lowercase, spaces to hyphens, strip punctuation). Example: "What if we made it open source?" → `open-source`.
-3. Write `.ideate/fork-brief.md`:
+3. **Ask the target question.** Before writing the fork brief, ask the user exactly one question (list existing features from `.ideate/artifacts/Feature - *.md` if any exist):
+
+   > Does this refine an existing feature, or is it a new one?
+   >
+   > Existing features: [[Feature - A]], [[Feature - B]], [[Feature - C]]
+   >
+   > Reply with a feature name, `new: <feature-name>`, or `exploratory` if you're not sure yet.
+
+   If no Feature artifacts exist yet, say: "No features captured yet. Is this a new feature (reply `new: <name>`), or exploratory (reply `exploratory`)?"
+
+   Interpret the reply:
+   - Feature name matching an existing `Feature - X.md` → target line is `Refines: [[Feature - X]]`
+   - `new: Foo` → target line is `New feature: Foo`
+   - `exploratory` (or unclear) → target line is `Target: TBD`
+
+4. Write `.ideate/fork-brief.md`:
 
 ```markdown
 # Fork Brief
 
 Operation: branch
 Topic: <slugified branch topic>
+<target line from step 3>
 Why: <the user's message that triggered branching>
 Current thread: <active branch from session.md>
 What we know so far: <2–4 sentences of relevant context from the conversation>
 Key questions: <what we're trying to answer on this branch>
 ```
 
-4. Invoke `/ideate.branch`. After it returns with the `/clear` instruction, **stop**. Do not resume the conversation. The user needs to `/clear` then `/ideate` to start the branch with clean context.
-5. Do not create the branch file yourself — `/ideate.branch` handles that.
+   Where `<target line from step 3>` is exactly one of:
+   - `Refines: [[Feature - X]]`
+   - `New feature: <name>`
+   - `Target: TBD`
+
+5. Invoke `/ideate.branch`. After it returns with the `/clear` instruction, **stop**. Do not resume the conversation. The user needs to `/clear` then `/ideate` to start the branch with clean context.
+6. Do not create the branch file yourself — `/ideate.branch` handles that.
 
 ---
 
@@ -293,18 +314,46 @@ Header: `# Feature - <Name>`
 
 Type: Feature
 Status: draft
+Version: v1
+Last merged: <branch-slug> (<date>)
+Refined by:
+  - v1: [[<branch-slug>]] (<date>)
 Extracted from: <thread name> (<date>)
 
-## Description
-<What this feature does>
+## Summary
+<One paragraph — what this feature is at a glance.>
 
-## Rationale
-<Why it exists — the problem it solves or the value it adds>
+## Problem & Value
+<Why it exists. What user problem it solves or what value it adds.>
+
+## Behavior
+<What it does, as a list of observable behaviors. Bulk of PRD content, derived from Decision artifacts.>
+- <behavior 1>
+- <behavior 2>
+
+## Data / Schema
+<Only if applicable. Inline machine-readable block (JSON Schema, type definition, example payload). For non-data features, omit this section.>
+
+## Constraints
+<Links to applicable Constraint artifacts, with one-line summary of how each applies here.>
+- [[Constraint - X]] — <how it applies>
+
+## Decisions
+<Links to Decision artifacts that shaped this feature, most recent first. Each with one-line outcome.>
+- [[Decision - Y]] — <what was decided>
 
 ## Open Questions
-- <question 1>
-- <question 2>
+- <unresolved question 1>
+
+## Out of Scope
+<What this feature explicitly does NOT do.>
+- <non-goal 1>
 ```
+
+**Schema notes:**
+- On initial inline extraction (during ideation, before any merge), omit `Last merged:` and `Refined by:`. These are populated by `/ideate:merge` during reconciliation.
+- `Status: draft` on first extraction. First merge that reconciles the feature flips it to `Status: reconciled` and sets `Version: v2`.
+- When extracting a Feature inline, fill what you know. Empty sections (e.g., `## Out of Scope`, `## Data / Schema` for non-data features) may be omitted — reconciliation fills them in as content develops.
 
 ---
 

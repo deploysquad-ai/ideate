@@ -99,10 +99,24 @@ This skill assembles all extracted artifacts and merged conclusions into a struc
 <For each Feature artifact>
 
 ### <Feature Name>
-<Description>
+<Summary from the feature artifact>
 
-**Rationale:** <from the feature artifact>
+**Problem & Value:** <from the feature artifact>
+
+**Behavior:**
+<Bulleted behaviors from the feature artifact>
+
+**Data / Schema:** <from the feature artifact, if the section exists — include the inline schema block>
+
+**Constraints:** <from the feature artifact, if any>
+
+**Decisions:** <from the feature artifact, if any>
+
 **Open Questions:** <from the feature artifact, if any>
+
+**Out of Scope:** <from the feature artifact, if any>
+
+**Version:** v<N> (reconciled from <list of branches from `Refined by:`>)
 
 ---
 

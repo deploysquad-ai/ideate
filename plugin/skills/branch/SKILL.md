@@ -6,10 +6,10 @@ context: fork
 
 # Startup
 
-1. Check if `.ideate/fork-brief.md` exists. If it does, read it to get `Topic`, `Why`, `Current thread`, `What we know so far`, and `Key questions`, then continue to step 2. If it does not exist (skill was invoked directly, not via the main `/ideate` skill), skip steps 2–4 and proceed directly to the main skill body below.
+1. Check if `.ideate/fork-brief.md` exists. If it does, read it to get `Topic`, `Why`, `Current thread`, `What we know so far`, `Key questions`, and the target line (one of `Refines:`, `New feature:`, or `Target: TBD`), then continue to step 2. If it does not exist (skill was invoked directly, not via the main `/ideate` skill), skip steps 2–4 and proceed directly to the main skill body below.
 2. Read `.ideate/session.md` for current session state.
 3. Delete `.ideate/fork-brief.md`.
-4. Use the brief's fields to populate the branch file — `What we know so far` goes into `## Context`, `Why` goes into `## Why`, and `Key questions` goes into `## Key Questions` (see Create a New Branch below).
+4. Use the brief's fields to populate the branch file — `What we know so far` goes into `## Context`, `Why` goes into `## Why`, `Key questions` goes into `## Key Questions`, and the target line is copied verbatim into the branch header (see Create a New Branch below).
 
 # Branch — Create or Switch Branches
 
@@ -32,6 +32,7 @@ This skill handles explicit branch operations. Most branching happens conversati
 # Branch: <branch-name>
 Status: active
 Created from: <current branch — usually "main">
+<target line>
 ---
 
 ## Why
@@ -44,6 +45,13 @@ Created from: <current branch — usually "main">
 - <question 1>
 - <question 2>
 ```
+
+Where `<target line>` is exactly one of:
+- `Refines: [[Feature - X]]`
+- `New feature: <name>`
+- `Target: TBD`
+
+If no fork brief was present (skill invoked directly, not via the main `/ideate` skill), ask the user: "Does this branch refine an existing feature, create a new one, or is it exploratory? (Reply with a feature name, `new: <name>`, or `exploratory`.)" Then use the appropriate target line.
 
 6. Update `.ideate/session.md` — set `Active branch: <branch-name>`.
 7. Tell the user: "Created branch `<branch-name>`. Run `/clear` then `/ideate` to start exploring it with clean context — just the branch brief, no main thread baggage."

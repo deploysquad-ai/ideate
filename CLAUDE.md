@@ -39,6 +39,8 @@ All skills read from and write to this directory. This is the shared contract.
 
 Six types: `feature`, `decision`, `constraint`, `persona`, `goal`, `module`. Each has a defined schema in the main ideate skill. Artifacts are stored as `<Type> - <Name>.md` in `.ideate/artifacts/`.
 
+**Feature artifacts are versioned and reconciled at merge.** When `/ideate:merge` runs on a branch targeting a feature, it rewrites the canonical `Feature - <Name>.md` to reflect the branch's decisions and writes a per-version refinement file named `Feature - <Name>.v<N>.refinements.md`. The canonical file is the single source of truth for the feature's current state; refinement files preserve the per-merge change history. See `skills/merge/SKILL.md` for the reconciliation flow and refinement file schema.
+
 ## Key Design Decisions
 
 - **No MCP server** — all state is markdown files read/written with Claude's native tools
